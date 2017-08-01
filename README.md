@@ -5,7 +5,7 @@
 
 * Замыкания
 * Области видимости, const, var, let
-* bind, call, apply, arrow functions
+* bind, call, apply, arrow functions, функция как конструктор
 * Деструктуризация
 * Декораторы
 * Мутабельность, иммутабельность
