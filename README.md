@@ -54,3 +54,10 @@
 * Reducers as BD, selectors as Materialized Views
 * Redux dev-tools, redux-logger
 * Тестирование с Jest, снепшот тестирование
+* propTypes, eslint, prettier, prettier-eslint
+
+
+### Build
+
+* Node.js, npm, Webpack, babel, babel plugins
+* Rails 5.1
