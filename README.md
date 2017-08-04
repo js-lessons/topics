@@ -1,7 +1,7 @@
 # Темы для обсуждения
 
 
-### Основы JavaScript
+### [Основы JavaScript](Basics.md)
 
 * Замыкания
 * Области видимости, const, var, let
