@@ -49,9 +49,52 @@ var myModule = {
   bindHandlers: function() {
     var self = this
 
-  	$('a').on('click', function() {
+    $('a').on('click', function() {
       console.log(self.settings)
     })
   }
 }
+```
+
+### Функция как конструктор
+
+До появления ключевого слова `class` в стандарте EcmaScript для создания конструкторов объектов использовались функции.
+Для того, чтобы отличать функции-конструкторы от обычных функций использовалось соглашение &mdash; именовать такие
+функции в camel case.
+
+[Пример](https://jsfiddle.net/dra1n/v4gsdmou/)
+
+```js
+function Person(name) {
+  this.name = name
+}
+
+var person = new Person("Vasya")
+
+alert(person.name)
+```
+
+### Прототипное наследование
+
+У многих объектов JavaScript есть ссылка на прототип объекта. При обращении к какому-либо свойству объекта по имени сначала значение ищется среди собственных свойств объекта (`Object.hasOwnProperty('name')`). 3атем, если свойство не было найдено, поиск осуществляется в прототипе, затем в прототипе прототипа и так далее. С помощью этого механизма можно реализовать [наследование](https://learn.javascript.ru/class-inheritance). Функция конструктор позволяет нам добавить методы и свойства в прототип объектов.
+
+[Пример](https://jsfiddle.net/dra1n/v4gsdmou/1/)
+
+```js
+function Person(name) {
+  this.name = name
+}
+
+Person.prototype.dict = {
+  'en': 'Hello',
+  'es': 'Hola'
+}
+
+Person.prototype.sayHello = function(lang) {
+  alert(this.dict[lang] + ", " + this.name)
+}
+
+var person = new Person("Vasya")
+
+person.sayHello('es')
 ```
