@@ -99,9 +99,9 @@ var person = new Person("Vasya")
 person.sayHello('es')
 ```
 
-### Function arguments
+### Аргументы функции
 В JavaScript любая функция может быть вызвана с произвольным количеством аргументов.
-Доступ к переданым аргументам может осуществляется через «псевдо-массив» `arguments`.
+Доступ к переданым аргументам осуществляется через «псевдо-массив» `arguments`.
 
 [Пример](https://jsfiddle.net/MihaChicken/4o00x0ej/)
 ```js
@@ -116,6 +116,7 @@ sayHi("Винни", "Пятачок");
 Чтобы сделать из arguments честный массив, можно использовать `Array.from(arguments)`
 
 Чтобы узнать сколько аргументов ожидает функция можно использовать свойство функции `length`
+
 [Пример](https://jsfiddle.net/MihaChicken/gxuqgw3m/)
 ```js
 function sum2(a, b) {
