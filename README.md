@@ -7,7 +7,9 @@
 * Области видимости, const, var, let
 * Функция как конструктор
 * Прототипное наследование
-* bind, call, apply, arrow functions
+* Function arguments****
+* bind, call, apply
+* arrow functions
 * Деструктуризация и дефолтные значения
 * Изменяемость, неизменяемость
 * splat оператор

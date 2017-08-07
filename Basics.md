@@ -99,7 +99,7 @@ var person = new Person("Vasya")
 person.sayHello('es')
 ```
 
-### Functions arguments
+### Function arguments
 В JavaScript любая функция может быть вызвана с произвольным количеством аргументов.
 Доступ к переданым аргументам может осуществляется через «псевдо-массив» `arguments`.
 
