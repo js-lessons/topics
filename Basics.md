@@ -99,7 +99,38 @@ var person = new Person("Vasya")
 person.sayHello('es')
 ```
 
-### bind, call, apply, arrow functions
+### Functions arguments
+В JavaScript любая функция может быть вызвана с произвольным количеством аргументов.
+Доступ к переданым аргументам может осуществляется через «псевдо-массив» `arguments`.
+
+[Пример](https://jsfiddle.net/MihaChicken/4o00x0ej/)
+```js
+function sayHi() {
+  for (var i = 0; i < arguments.length; i++) {
+    alert( "Привет, " + arguments[i] );
+  }
+}
+
+sayHi("Винни", "Пятачок");
+```
+Чтобы сделать из arguments честный массив, можно использовать `Array.from(arguments)`
+
+Чтобы узнать сколько аргументов ожидает функция можно использовать свойство функции `length`
+[Пример](https://jsfiddle.net/MihaChicken/gxuqgw3m/)
+```js
+function sum2(a, b) {
+  return a + b 
+}
+function sum3(a, b, c) {
+  return a + b + c
+}
+
+alert(sum2.length) // 2
+alert(sum3.length) // 3
+```
+
+
+### bind, call, apply
 
 В JavaScript есть понятие контекст вызова функции и обычно для обращения к контексту используют ключевое слово `this`.
 `this` часто используется для доступа к текущему объекту из метода, также многие библиотеки (jQuery, React.js) дают доступ через `this` к инстансу события в обработчиках событий, определенных пользователем.
@@ -141,8 +172,40 @@ alert(add.call(numbers, 3))
 alert(add.apply(numbers, [10]))
 ```
 
+### Arrow functions [(ES6)](http://exploringjs.com/es6/ch_arrow-functions.html)
 
-### Деструктуризация и дефолтные значения
+Выражения стрелочных функций имеют более короткий синтаксис по сравнению с функциональными выражениями и лексически привязаны к значению `this` (но не привязаны к собственному `this`, `arguments`). Стрелочные функции всегда анонимные.
+
+Пример 
+```js
+
+var square1 = function(n) { 
+  return n * n; 
+}
+var square2 = (n) => {
+  return  n * n;
+}
+var square3 = n => n * n
+
+```
+[Пример](https://jsfiddle.net/MihaChicken/gp0283t1/) использования `this`
+```js
+
+var o = {
+  data: 1,
+  f1: () => this.data,
+  f2: function() {
+    return this.data
+  }
+}
+
+alert(o.f1()) // undefined
+alert(o.f2()) // 1
+
+```
+
+
+### Деструктуризация [(ES6)](http://exploringjs.com/es6/ch_destructuring.html) и дефолтные значения[(ES6)](http://exploringjs.com/es6/ch_parameter-handling.html)
 
 Деструктуризация позволяет извлекать данные из массивов или объектов и присваивать эти данные переменным используя специальный синтаксис.
 
@@ -201,3 +264,16 @@ console.log(fullName('Jonh Doe')) // 'John Doe' без параметра по �
 ```
 
 Больше можно почитать на [developer.mozilla.org](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
+
+
+# Ресурсы
+
+### JavaScript
+- [ES6 tutorial](http://ccoenraets.github.io/es6-tutorial/) - устновка системы сборки и использование базовых фишек ES6
+- [10 Interview Questions
+   Every JavaScript Developer Should Know](https://medium.com/javascript-scene/10-interview-questions-every-javascript-developer-should-know-6fa6bdf5ad95)
+
+### Вёрстка
+- [Flexbox game tutorial](http://flexboxfroggy.com/) очень рекомендую
+- [Flexbox guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [BEM guide](https://css-tricks.com/bem-101/)
