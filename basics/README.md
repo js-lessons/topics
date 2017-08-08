@@ -266,8 +266,98 @@ console.log(fullName('Jonh Doe')) // 'John Doe' без параметра по �
 
 Больше можно почитать на [developer.mozilla.org](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 
+### Изменяемость, неизменяемость
 
-# Ресурсы
+В JavaScript есть как изменяемые, так и незменяемые структуры данных. Примером неизменяемых структур могут служить числа, строки и регулярные выражения. Массивы и объекты же являются изменяемыми.
+
+[Пример](https://jsfiddle.net/dra1n/bqLnv4kh/). Функция изменяет объект из внешнего окружения
+
+```js
+var settings = {
+  user: 'John Doe'
+}
+
+function printUser(settings) {
+  settings.user = 'Hello, ' + settings.user
+  console.log(settings.user)
+}
+
+printUser(settings)
+
+console.log(settings.user) // 'Hello, John Doe'
+```
+
+Об изменяемых структурах говорят что они передаются по ссылке, а неизменяемые по значению.
+
+[Пример](https://jsfiddle.net/dra1n/64s241jn/). Меняем копию &mdash; меняется изначальный объект
+
+```js
+var settings = {
+  user: 'John Doe'
+}
+
+var settingsCopy = settings
+
+settingsCopy.user = 'Jane Doe'
+
+console.log(settings.user) // 'Jane Doe'
+```
+
+Некоторые методы изменяют объект, а некоторые возвращают копию.
+
+[Например](https://jsfiddle.net/dra1n/16bpv8c6/)
+
+```js
+var a = [1, 2, 3]
+var a1 = a.slice(0, 2) // a1 новый массив
+
+console.log(a)  // [1, 2, 3]
+console.log(a1) // [1, 2]
+
+var b = [1, 2, 3]
+var b1 = b.splice(0, 2)  // b изменяется
+
+console.log(b)  // [3]
+console.log(b1) // [1, 2]
+```
+
+### splat оператор
+
+Для создания новой структуры данных на основе старой используется `splat` оператор `...`
+
+[Пример](https://jsfiddle.net/dra1n/w6ecw8ye/)
+
+```js
+var a = [1, 2, 3]
+var b = [...a, 4, 5]
+var c = [0, ...b]
+
+console.log(a) // [1, 2, 3]
+console.log(b) // [1, 2, 3, 4, 5]
+console.log(c) // [0, 1, 2, 3, 4, 5]
+
+var o = { name: 'John' }
+var s = { ...o, email: 'john@mail.com' }
+
+console.log(o) // { name: 'John' }
+console.log(s) // { name: "John", email: "john@mail.com" }
+```
+
+При этом не происходит "глубокого" копирования
+
+[Пример](https://jsfiddle.net/dra1n/a5tz0qtd/)
+
+```js
+var settings = { user: { email: 'john@gmail.com' }, update: false }
+var settings1 = { ...settings, update: true }
+
+settings1.user.email = 'jane@gmail.com'
+
+console.log(settings.update) // false
+console.log(settings.user.email) // 'jane@gmail.com'
+```
+
+## Ресурсы
 
 ### JavaScript
 - [ES6 tutorial](http://ccoenraets.github.io/es6-tutorial/) - устновка системы сборки и использование базовых фишек ES6
@@ -278,3 +368,6 @@ console.log(fullName('Jonh Doe')) // 'John Doe' без параметра по �
 - [Flexbox game tutorial](http://flexboxfroggy.com/) очень рекомендую
 - [Flexbox guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 - [BEM guide](https://css-tricks.com/bem-101/)
+
+### Misc
+- [Value of Values](https://www.youtube.com/watch?v=-6BsiVyC1kM&t=1s)
