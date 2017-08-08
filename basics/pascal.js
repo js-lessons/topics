@@ -10,7 +10,7 @@ const generateRow = previousRow => {
   ]
 }
 
-const pascalTriangle = n => {
+const pascalTriangle1 = n => {
   if (n < 1) {
     return []
   }
@@ -24,7 +24,7 @@ const pascalTriangle = n => {
 const pascalTriangle2 = n => Array.from({length: n})
   .reduce(result => [...result, generateRow(result[result.length - 1])], [[1]])
 
-pascalTriangle(3).forEach(row => {
+pascalTriangle1(3).forEach(row => {
   console.log(row)
 })
 
