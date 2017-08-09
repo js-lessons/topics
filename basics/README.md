@@ -1,5 +1,7 @@
 # Основы JavaScript
 
+![js](http://apdevblog.com/images/2016/modern-javascript-annotated.png "modern js")
+
 ### Замыкания
 
 Замыкание &mdash; это свойство функции сохранять значения свободных переменных,
