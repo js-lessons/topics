@@ -3,10 +3,10 @@
  * @param {Object} context - контекст к которому будет "привязана" функция
  * @returns {Function}
  */
-Function.prototype.bind1 = function(context) {
+Function.prototype.bind1 = function (context) {
   var fn = this
   var bindedArgs = Array.from(arguments).slice(1)
-  return function() {
+  return function () {
     return fn.apply(context, bindedArgs.concat(Array.from(arguments)))
   }
 }
@@ -17,7 +17,7 @@ Function.prototype.bind1 = function(context) {
  * @param {Array} bindedArgs - массив аргументов которые будут "привязаны" к функции
  * @returns {function(...[*]): *}
  */
-Function.prototype.bind2 = function(context, ...bindedArgs) {
+Function.prototype.bind2 = function (context, ...bindedArgs) {
   return (...args) => this.apply(context, [...bindedArgs, ...args])
 }
 

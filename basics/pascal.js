@@ -1,4 +1,3 @@
-
 /**
  * Функция, которая генерирует следующий ряд треугольника основываясь на предидущем
  * Длина следующего ряда должна равнятся длине предидущего плюс один
@@ -31,7 +30,7 @@ const pascalTriangle1 = n => {
     return []
   }
   const result = [[1]]
-  for(let i = 1; i < n; i++) {
+  for (let i = 1; i < n; i++) {
     result.push(generateRow(result[i - 1]))
   }
   return result
@@ -42,10 +41,8 @@ const pascalTriangle1 = n => {
  * @param n - количество рядов
  * @returns {[Array]}
  */
-const pascalTriangle2 = n =>  n === 0 ? [] : Array.from({length: n - 1})
+const pascalTriangle2 = n => n === 0 ? [] : Array.from({length: n - 1})
   .reduce(result => [...result, generateRow(result[result.length - 1])], [[1]])
-
-
 
 pascalTriangle1(5).forEach(row => {
   console.log(row)
