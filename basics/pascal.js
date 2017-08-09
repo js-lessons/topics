@@ -42,12 +42,12 @@ const pascalTriangle1 = n => {
  * @param n - количество рядов
  * @returns {[Array]}
  */
-const pascalTriangle2 = n => Array.from({length: n})
+const pascalTriangle2 = n =>  n === 0 ? [] : Array.from({length: n - 1})
   .reduce(result => [...result, generateRow(result[result.length - 1])], [[1]])
 
 
 
-pascalTriangle1(3).forEach(row => {
+pascalTriangle1(5).forEach(row => {
   console.log(row)
 })
 
