@@ -1,4 +1,15 @@
 
+/**
+ * Функция, которая генерирует следующий ряд треугольника основываясь на предидущем
+ * Длина следующего ряда должна равнятся длине предидущего плюс один
+ * Первое и последние число следующего ряда равняется первом и поседнему числу предидущего ряда (или всегда 1)
+ * Остальные числа в следующем ряду (между первым и последним) будут равнятся сумме двух чисел,
+ *    первое - число из предидщугео ряда с таким же индексом
+ *    второе - число из предидущего рядо с индексом на один большим
+ *
+ * @param {[Number]} previousRow - предидущая строка
+ * @returns {[Number]}           - следующая строка
+ */
 const generateRow = previousRow => {
   const previousLength = previousRow.length
   return [
@@ -10,6 +21,11 @@ const generateRow = previousRow => {
   ]
 }
 
+/**
+ * Функция генерирует треугольник состоящий из массива массивов, где каждый массив это ряд чисел в треугольнике
+ * @param n - количество рядов
+ * @returns {[Array]}
+ */
 const pascalTriangle1 = n => {
   if (n < 1) {
     return []
@@ -21,13 +37,19 @@ const pascalTriangle1 = n => {
   return result
 }
 
+/**
+ * Аналогичная функция но с использованием всех фишек  ES6
+ * @param n - количество рядов
+ * @returns {[Array]}
+ */
 const pascalTriangle2 = n => Array.from({length: n})
   .reduce(result => [...result, generateRow(result[result.length - 1])], [[1]])
+
+
 
 pascalTriangle1(3).forEach(row => {
   console.log(row)
 })
-
 
 pascalTriangle2(5).forEach(row => {
   console.log(row)
