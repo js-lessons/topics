@@ -17,7 +17,7 @@ const config = {
 export default config
 ```
 
-Или React компонент
+Или React компоненту
 
 ```js
 class Flash extends Component {
