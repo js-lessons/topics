@@ -10,7 +10,7 @@
 
 ```js
 const config = {
-  'DROPBOX_APP_KEY': '9jllu8tn,
+  'DROPBOX_APP_KEY': '9jllu8tn',
   'CONTACT_REQUEST_URL': 'http://cookbox-contact.herokuapp.com/message'
 }
 
