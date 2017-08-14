@@ -65,7 +65,7 @@ import { UPDATE_DEMANDS_REQUEST, APPEND_DEMANDS_DATA } from './actions/demands'
 
 ### index.js и barrel файлы
 
-Если в каталоге есть index.js файл, то он будет использоваться при попытке импортировать этот таталог. Этот файл обычно используется чтобы собрать все экспорты из данного каталога в одном месте. Это и есть [barrel](https://basarat.gitbooks.io/typescript/docs/tips/barrel.html) файл.
+Если в каталоге есть index.js файл, то он будет использоваться при попытке импортировать этот каталог. Этот файл обычно используется чтобы собрать все экспорты из данного каталога в одном месте. Это и есть [barrel](https://basarat.gitbooks.io/typescript/docs/tips/barrel.html) файл.
 
 Например
 
