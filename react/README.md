@@ -151,14 +151,118 @@ this.setState выполняется асинхронно, что означае
 - props immutable
 - state - private
 
+```jsx harmony
+class Timer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      time: this.props.initialTime || 0
+    }
+  }
+  
+  componentDidMount() {
+    setInterval(
+      () => this.setState(({time}) => ({ time: time + 1 }))
+      , 1000)  
+  }
+  
+  render() {
+    const {time} = this.state
+    return <h1>{this.props.message} {time} second(s) ago!</h1>;
+  }
+}
+
+Timer.propTypes = {
+  initialTime: React.PropTypes.number,
+  message: React.PropTypes.string  
+}
+
+const element = <Timer initialTime={Math.abs(Date.now() / 1000)} message="01.01.1970 was"/>;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+
 #### глупые и умные компоненты
- 
- TODO
+В зависимости от наличие state компоненты делятся на два типа:
+- Stateless (глупые) - результат работы таких таких компонентов зависит только от props и их можно рассматривать как чистые функции,
+потому что при одинаковом наборе props они всегда будут "возращать" одинаковый результат. Такие компоненты легко переиспользовать и тестировать.
+- Statefull (умные) - являются местами "концентрации" состояния в приложении, как следствие содержат логику работы с этим состоянием 
+и обработку пользовательских событий.
+
+Stateless компоненты можно объявлять в виде функций
+```jsx harmony
+const Greeting = ({name, official}) => <h1>{official ? 'Hello my dear' : 'Hi'}, {name}!</h1>
+
+Greeting.propTypes = {
+  name: React.PropTypes.string,
+  official: React.PropTypes.bool
+}
+
+ReactDOM.render(
+  <Greeting name="World" official={true}/>,
+  document.getElementById('root')
+);
+```
  
 #### поток данных и событий
- TODO
-### v = f(s, p)
- TODO
+ Обычно, умные компоненты стараются держать как можно выше в дереве компонентов,
+ чтобы покрыть стейтом как можно больше вложеных компонентов.
+ 
+```jsx harmony
+const Button = ({title, onClick, isDisabled}) => <button 
+    className={`button ${isDisabled ? 'button_disabled' : ''}`} 
+    onClick={onClick}>
+  {title}
+</button>
+
+Button.propTypes = {
+  title: React.PropTypes.string,
+  onClick: React.PropTypes.func,
+  isDisabled: React.PropTypes.bool
+}
+
+class Counter extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: props.defaultValue || 0
+    }
+    
+    this.increment = this.changeValue.bind(this, 1)
+    this.decrement = this.changeValue.bind(this, -1)
+  }
+  
+  changeValue(diff) {
+    this.setState(({value}) => ({
+      value: value + diff
+    })) 
+  }
+  
+  render() {
+    const {value} = this.state
+    return (
+      <div>
+        <Button title="-" onClick={this.increment} isDisabled={value === this.props.min}/>
+        <span>{value}</span>
+        <Button title="+" onClick={this.decrement} isDisabled={value === this.props.max}/>
+      </div>
+    )
+  }
+}
+
+Counter.propTypes = {
+  defaultValue: React.PropTypes.number,
+  min: React.PropTypes.number,
+  max: React.PropTypes.number
+}
+```
+### v = f(s)
+ 
+Важно понимать, что всё React приложение это функция которая на основе текущего состояния генерирует текущее представлениею
+ 
+ 
 ### Методы жизненного цикла React компоненты
 
 ![react-lifecycle](https://staminaloops.github.io/undefinedisnotafunction/images/react-lifecycle.jpg)
