@@ -13,7 +13,7 @@
 ```jsx harmony
 class Greeting extends React.Component {
   render() {
-    return <h1>Hello, {this.props.name}</h1>;
+    return <h1 className="greeting">Hello world!</h1>;
   }
 }
 
@@ -46,9 +46,119 @@ const element = React.createElement(
 
 ### props vs state, глупые и умные компоненты, поток данных и событий
 
+Есть два источника данных на основе которых генерируется представление - это свойства(props) и состояние(state):
+- props попдают в компонент из родителя.
+- state генерируется и изменяется внутри компонента.
 
+#### Props
+
+Пример передачи props
+```jsx harmony
+class Greeting extends React.Component {
+  render() {
+    const {name} = this.props
+    return <h1>Hello, {name}</h1>;
+  }
+}
+
+const element = <Greeting name="World!"/>;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+
+Пример передачи функции
+```jsx harmony
+class GreetingButton extends React.Component {
+  render() {
+    const {onClick, name} = this.props
+    return <button onClick={onClick}>Click me, {name}!</button>;
+  }
+}
+
+GreetingButton.propTypes = {
+  onClick: React.PropTypes.func, 
+  name: React.PropTypes.string, 
+}
+
+const element = <GreetingButton name="Vasya" onClick={() => {alert('Hello World!')}}/>;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+
+Важно помнить:
+- props всегда read-only и не могут быть изменены внутри компонента
+- Мы можем передать колбэк в компонент чтобы подписаться на событие
+- Хорошая практика - всегда указывать типы props которые ожидает компонент
+
+#### State
+Пример работы с состоянием
+```jsx harmony
+class Timer extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      time: 0
+    }
+  }
+  
+  componentDidMount() {
+    setInterval(() => {
+      // this.setState({
+      //   state: this.state.time + 1
+      // })
+      this.setState((state) => ({
+        time: state.time + 1
+      }))
+    }, 1000)  
+  }
+  
+  render() {
+    const {time} = this.state
+    return <h1>You have mounted this component {time} second(s) ago!</h1>;
+  }
+}
+
+const element = <Timer/>;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+Функция `this.setState` принимает в себя два аргумента: `updater` и `callback`
+
+`updater` может быть объектом или функцией. В случае если это объект, то все его значения будут перенесены в стейт.
+this.setState выполняется асинхронно, что означает что состояние будет обовленно через какое-то время после вызова этой функции 
+и к этому моменту текущее состояние может уже изменится. Это особенно критично если новое состояние расчитывает исходя из старого.
+Чтобы решить эту проблему `this.setState` может принимать первым параметром функцию которая будет вызвана с актуальным state и props 
+прямо перед обновлением компонента и результатом работы этой функции должен быть обновленный стейт.
+
+`callback` будет вызван после того как компонент будет обновлён.
+
+#### props vs state
+
+Сходства:
+- и то и то js-объекты
+- изменения генерирует перерисовку компонента
+- играют определяющие значение на результат работы(render) компоненты
+
+Различия:
+- props определяется извне
+- state определяется изнутри
+- props immutable
+- state - private
+
+#### глупые и умные компоненты
+ 
+ TODO
+ 
+#### поток данных и событий
+ TODO
 ### v = f(s, p)
-
+ TODO
 ### Методы жизненного цикла React компоненты
 
 ![react-lifecycle](https://staminaloops.github.io/undefinedisnotafunction/images/react-lifecycle.jpg)
@@ -76,15 +186,40 @@ class Greeting extends React.Component {
   }
 }
 
-const element = <Greeting/>;
 ReactDOM.render(
-  element,
+  <Greeting/>,
   document.getElementById('root')
 );
 ```
 
 #### shouldComponentUpdate
+Вызывается перед тем как компонент должен обновится. Метод принимает в себя параметрами новые значения state и props
+и должен вернуть true или false в зависимости от того должен ли компонент обновится.
+Используется для оптимизации производительности
 
+Пример
+```jsx harmony
+class WhatEver extends React.Component {
+  
+  shouldComponentUpdate(nextProps) {
+    return nextProps.someNumber % 5 !== this.props.someNumber % 5 
+  }
+  
+  render() {
+    const fooAmount = this.props.someNumber % 5
+    return <div>{Array.from({length: fooAmount}).map(() => <h1>foo</h1>)}</div>;
+  }
+}
+
+ReactDOM.render(
+  <WhatEver someNumber={4}/>,
+  document.getElementById('root')
+);
+```
+В данном примере видно что при разных props результат отображения будет одинаковый, 
+поэтому чтобы избежать ненужных манипуляций с VirtualDOM мы реализуем метод shpuldComponentUpdate
+
+Главное помнить: Преждевременная оптимизация - корень всех зол (с)
 
 #### componentWillUnmount
 Вызывается перед тем как компонент будет удалён со страницы
@@ -115,3 +250,7 @@ class Timer extends React.Component {
 ```
 
 ## Ресурсы
+- [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
+- [React Forms](https://facebook.github.io/react/docs/forms.html)
+- [React Context](https://facebook.github.io/react/docs/context.html)
+- [Lifting state up](https://facebook.github.io/react/docs/lifting-state-up.html)
