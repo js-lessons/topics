@@ -308,8 +308,8 @@ class BaconIpsum extends React.Component {
   
   componentDidMount() {
     fetch('https://baconipsum.com/api/?type=meat')
-    	.then(response => response.json())
-      .then(([text]) => this.setState({ text }))
+     .then(response => response.json())
+     .then(([text]) => this.setState({ text }))
   }
   
   render() {
