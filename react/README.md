@@ -89,6 +89,23 @@ ReactDOM.render(
 );
 ```
 
+Пример передачи компонетов через children
+```jsx harmony
+class Greeting extends React.Component {
+  render() {
+    const {children} = this.props
+    return <h1>Hello, {children}</h1>;
+  }
+}
+
+const element = <Greeting><b>World!</b></Greeting>;
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+```
+
+
 Важно помнить:
 - props всегда read-only и не могут быть изменены внутри компонента
 - Мы можем передать колбэк в компонент чтобы подписаться на событие
@@ -151,6 +168,7 @@ this.setState выполняется асинхронно, что означае
 - props immutable
 - state - private
 
+[Пример](https://jsfiddle.net/MihaChicken/zfxrnx41/)
 ```jsx harmony
 class Timer extends React.Component {
   constructor(props) {
@@ -177,7 +195,7 @@ Timer.propTypes = {
   message: React.PropTypes.string  
 }
 
-const element = <Timer initialTime={Math.abs(Date.now() / 1000)} message="01.01.1970 was"/>;
+const element = <Timer initialTime={Math.floor(Date.now() / 1000)} message="01.01.1970 was"/>;
 ReactDOM.render(
   element,
   document.getElementById('root')
@@ -212,10 +230,12 @@ ReactDOM.render(
  Обычно, умные компоненты стараются держать как можно выше в дереве компонентов,
  чтобы покрыть стейтом как можно больше вложеных компонентов.
  
+ [Пример](https://jsfiddle.net/MihaChicken/gxzxx2qj/)
 ```jsx harmony
 const Button = ({title, onClick, isDisabled}) => (
   <button 
     className={`button ${isDisabled ? 'button_disabled' : ''}`} 
+    disabled={isDisabled}
     onClick={onClick}>
     {title}
   </button>
@@ -248,9 +268,9 @@ class Counter extends React.Component {
     const {value} = this.state
     return (
       <div>
-        <Button title="-" onClick={this.increment} isDisabled={value === this.props.min}/>
+        <Button title="-" onClick={this.decrement} isDisabled={value === this.props.min}/>
         <span>{value}</span>
-        <Button title="+" onClick={this.decrement} isDisabled={value === this.props.max}/>
+        <Button title="+" onClick={this.increment} isDisabled={value === this.props.max}/>
       </div>
     )
   }
@@ -266,7 +286,6 @@ Counter.propTypes = {
  
 Важно понимать, что всё React приложение это функция которая на основе текущего состояния генерирует текущее представление.
  
- 
 ### Методы жизненного цикла React компоненты
 
 ![react-lifecycle](https://staminaloops.github.io/undefinedisnotafunction/images/react-lifecycle.jpg)
@@ -277,27 +296,36 @@ Counter.propTypes = {
 #### componentWillMount и componentDidMount
 Вызываются перед и, соответсвенно, после того как компонент будет добавлен на страницу. 
 Чаще всего используется для подгрузки дополнительных данных.
+
+[Пример](https://jsfiddle.net/MihaChicken/sndwcw6q/)
 ```jsx harmony
-class Greeting extends React.Component {
+class BaconIpsum extends React.Component {
   
   constructor(props) {
     super(props)
-    this.state = { name: '' }
+    this.state = { text: '' }
   }
   
   componentDidMount() {
-    fetch('http://names.com/42').then(name => this.setState({ name }))
+    fetch('https://baconipsum.com/api/?type=meat')
+    	.then(response => response.json())
+      .then(([text]) => this.setState({ text }))
   }
   
   render() {
-    return <h1>Hello, {this.state.name}</h1>;
+    return (
+      <div>
+        <h1>Bacon Ipsum: </h1>
+        {this.state.text}
+      </div>
+    )
   }
 }
 
 ReactDOM.render(
-  <Greeting/>,
+  <BaconIpsum/>,
   document.getElementById('root')
-);
+)
 ```
 
 #### shouldComponentUpdate
@@ -359,11 +387,13 @@ class Timer extends React.Component {
 
 ## Домашнее задание
 - [Пройти туториал](https://facebook.github.io/react/tutorial/tutorial.html)
+- Разобарться с [Promise](https://learn.javascript.ru/promise)
 
 ## Ресурсы
 - [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 - [React Forms](https://facebook.github.io/react/docs/forms.html)
 - [React Context](https://facebook.github.io/react/docs/context.html)
 - [Lifting state up](https://facebook.github.io/react/docs/lifting-state-up.html)
+- [Refs and the DOM](https://facebook.github.io/react/docs/refs-and-the-dom.html)
 - [React Comments JSFiddle](https://jsfiddle.net/dra1n/q8u0a3xh/)
 - [React Comments Github](https://github.com/js-lessons/react-comments)
