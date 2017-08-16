@@ -46,7 +46,7 @@ const element = React.createElement(
 
 ### props vs state, глупые и умные компоненты, поток данных и событий
 
-Есть два источника данных на основе которых генерируется представление - это свойства(props) и состояние(state):
+Есть два источника данных на основе которых генерируется представление &mdash; это свойства(props) и состояние(state):
 - props попдают в компонент из родителя.
 - state генерируется и изменяется внутри компонента.
 
@@ -92,7 +92,7 @@ ReactDOM.render(
 Важно помнить:
 - props всегда read-only и не могут быть изменены внутри компонента
 - Мы можем передать колбэк в компонент чтобы подписаться на событие
-- Хорошая практика - всегда указывать типы props которые ожидает компонент
+- Хорошая практика &mdash; всегда указывать типы props которые ожидает компонент
 
 #### State
 Пример работы с состоянием
@@ -108,7 +108,7 @@ class Timer extends React.Component {
   componentDidMount() {
     setInterval(() => {
       // this.setState({
-      //   state: this.state.time + 1
+      //   time: this.state.time + 1
       // })
       this.setState((state) => ({
         time: state.time + 1
@@ -132,7 +132,7 @@ ReactDOM.render(
 
 `updater` может быть объектом или функцией. В случае если это объект, то все его значения будут перенесены в стейт.
 this.setState выполняется асинхронно, что означает что состояние будет обовленно через какое-то время после вызова этой функции 
-и к этому моменту текущее состояние может уже изменится. Это особенно критично если новое состояние расчитывает исходя из старого.
+и к этому моменту текущее состояние может уже изменится. Это особенно критично если новое состояние расчитывается исходя из старого.
 Чтобы решить эту проблему `this.setState` может принимать первым параметром функцию которая будет вызвана с актуальным state и props 
 прямо перед обновлением компонента и результатом работы этой функции должен быть обновленный стейт.
 
@@ -143,7 +143,7 @@ this.setState выполняется асинхронно, что означае
 Сходства:
 - и то и то js-объекты
 - изменения генерирует перерисовку компонента
-- играют определяющие значение на результат работы(render) компоненты
+- играют определяющие значение на результат работы (render) компоненты
 
 Различия:
 - props определяется извне
@@ -187,13 +187,15 @@ ReactDOM.render(
 #### глупые и умные компоненты
 В зависимости от наличие state компоненты делятся на два типа:
 - Stateless (глупые) - результат работы таких таких компонентов зависит только от props и их можно рассматривать как чистые функции,
-потому что при одинаковом наборе props они всегда будут "возращать" одинаковый результат. Такие компоненты легко переиспользовать и тестировать.
+потому что при одинаковом наборе props они всегда будут "возвращать" одинаковый результат. Такие компоненты легко переиспользовать и тестировать.
 - Statefull (умные) - являются местами "концентрации" состояния в приложении, как следствие содержат логику работы с этим состоянием 
 и обработку пользовательских событий.
 
 Stateless компоненты можно объявлять в виде функций
 ```jsx harmony
-const Greeting = ({name, official}) => <h1>{official ? 'Hello my dear' : 'Hi'}, {name}!</h1>
+const Greeting = ({name, official}) => (
+  <h1>{official ? 'Hello my dear' : 'Hi'}, {name}!</h1>
+)
 
 Greeting.propTypes = {
   name: React.PropTypes.string,
@@ -211,11 +213,13 @@ ReactDOM.render(
  чтобы покрыть стейтом как можно больше вложеных компонентов.
  
 ```jsx harmony
-const Button = ({title, onClick, isDisabled}) => <button 
+const Button = ({title, onClick, isDisabled}) => (
+  <button 
     className={`button ${isDisabled ? 'button_disabled' : ''}`} 
     onClick={onClick}>
-  {title}
-</button>
+    {title}
+  </button>
+)
 
 Button.propTypes = {
   title: React.PropTypes.string,
@@ -260,7 +264,7 @@ Counter.propTypes = {
 ```
 ### v = f(s)
  
-Важно понимать, что всё React приложение это функция которая на основе текущего состояния генерирует текущее представлениею
+Важно понимать, что всё React приложение это функция которая на основе текущего состояния генерирует текущее представление.
  
  
 ### Методы жизненного цикла React компоненты
@@ -353,8 +357,13 @@ class Timer extends React.Component {
 }
 ```
 
+## Домашнее задание
+- [Пройти туториал](https://facebook.github.io/react/tutorial/tutorial.html)
+
 ## Ресурсы
 - [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 - [React Forms](https://facebook.github.io/react/docs/forms.html)
 - [React Context](https://facebook.github.io/react/docs/context.html)
 - [Lifting state up](https://facebook.github.io/react/docs/lifting-state-up.html)
+- [React Comments JSFiddle](https://jsfiddle.net/dra1n/q8u0a3xh/)
+- [React Comments Github](https://github.com/js-lessons/react-comments)
