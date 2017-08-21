@@ -192,6 +192,7 @@ Promise.all([fetchUser, fetchPosts])
 ## Домашние задание
 
 Разобраться с [примером](https://jsfiddle.net/nq8c1hsk/)
+
 [Пример без промисов](https://jsfiddle.net/v0tsenuL/)
 
 ## Ресурсы
