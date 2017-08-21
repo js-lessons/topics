@@ -36,7 +36,7 @@
 * Catch
 
 
-### [Основы React.js]](react/README.md)
+### [Основы React.js](react/README.md)
 
 * Определение React компонент, функциональные компоненты
 * JSX и React элементы

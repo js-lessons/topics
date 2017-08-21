@@ -206,7 +206,7 @@ ReactDOM.render(
 В зависимости от наличие state компоненты делятся на два типа:
 - Stateless (глупые) - результат работы таких таких компонентов зависит только от props и их можно рассматривать как чистые функции,
 потому что при одинаковом наборе props они всегда будут "возвращать" одинаковый результат. Такие компоненты легко переиспользовать и тестировать.
-- Statefull (умные) - являются местами "концентрации" состояния в приложении, как следствие содержат логику работы с этим состоянием 
+- Stateful (умные) - являются местами "концентрации" состояния в приложении, как следствие содержат логику работы с этим состоянием 
 и обработку пользовательских событий.
 
 Stateless компоненты можно объявлять в виде функций
@@ -308,8 +308,8 @@ class BaconIpsum extends React.Component {
   
   componentDidMount() {
     fetch('https://baconipsum.com/api/?type=meat')
-    	.then(response => response.json())
-      .then(([text]) => this.setState({ text }))
+     .then(response => response.json())
+     .then(([text]) => this.setState({ text }))
   }
   
   render() {
@@ -370,8 +370,7 @@ class Timer extends React.Component {
   
   componentWillMount() {
     this.interval = setInterval(
-      () => 
-        this.setState((time) => ({time: time + 1}))
+      () => this.setState(({time}) => ({time: time + 1}))
       , 1000)
   }
   
