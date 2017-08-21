@@ -38,11 +38,11 @@
 * Методы жизненного цикла React компоненты
 
 
-### Основы Redux
+### [Основы Redux](redux-basics/README.md)
 
-* Глобальная идея - храним все в одном месте
+* Глобальная идея &mdash; храним все в одном месте
 * Store, Actions, Reducers
-* Получение данных внутри компоненты, connect
+* Получение данных внутри компоненты, Provider, connect
 * Изменение данных из компоненты, dispatch, bindActionCreators
 * Сайдэффекты, middleware и redux-thunk
 
