@@ -218,3 +218,8 @@ function promiseMiddleware(store) {
   }
 }
 ```
+
+## Ресурсы
+
+[Getting Started with Redux](https://egghead.io/courses/getting-started-with-redux)
+[The Elm Architecture](https://guide.elm-lang.org/architecture/)
