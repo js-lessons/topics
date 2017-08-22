@@ -29,6 +29,13 @@
 * Наследование
 
 
+### [Асинхронность](async/README.md)
+
+* Callback hell
+* Promise chain
+* Catch
+
+
 ### [Основы React.js](react/README.md)
 
 * Определение React компонент, функциональные компоненты
