@@ -225,3 +225,4 @@ function promiseMiddleware(store) {
 * [Redux docs](http://redux.js.org/)
 * [The Elm Architecture](https://guide.elm-lang.org/architecture/)
 * [Slides](https://docs.google.com/presentation/d/199JdeW2giqHqfhpNCIYHfzTavTVU19XY7c9VAzaCIvM/edit?usp=sharing)
+* [Redux example](https://github.com/js-lessons/redux-example)
