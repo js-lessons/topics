@@ -69,5 +69,8 @@
 
 ### Build
 
-* Node.js, npm, Webpack, babel, babel plugins
+* Node.js, npm, Webpack, babel, babel пресеты и плагины
 * Rails 5.1
+
+
+### [Финальный проект](project/README.md)
