@@ -58,4 +58,80 @@ export function *watchItems() {
 
 ### generators
 
+Генераторы &mdash; новый вид функций в современном JavaScript. Они отличаются от обычных тем, что могут приостанавливать своё выполнение, возвращать промежуточный результат и далее возобновлять его позже, в произвольный момент времени. Подробнее почитать можно [тут](https://learn.javascript.ru/generator)
+
+[Пример](https://jsfiddle.net/dra1n/h6s4b6Lw/)
+
+```js
+function* generateSequence() {
+  yield 1
+  yield 2
+  return 3
+}
+
+const generator = generateSequence()
+
+console.log(generator.next()) // {value: 1, done: false}
+console.log(generator.next()) // {value: 2, done: false}
+console.log(generator.next()) // {value: 3, done: true}
+```
+
+Имея ссылку на генератор мы контролируем момент, когда `yield` вернет результат. Таким образом можно эмулировать синхронность в асинхронном коде.
+
+[Еще пример](https://jsfiddle.net/dra1n/uok446v4/)
+
+```js
+function async(makeGenerator) {
+  return function() {
+    const generator = makeGenerator()
+
+    function handle(result) {
+      // result => { done: [Boolean], value: [Object] }
+      if (result.done) {
+        return Promise.resolve(result.value)
+      }
+
+      return Promise.resolve(result.value).then(res => {
+        return handle(generator.next(res))
+      }, err => {
+        return handle(generator.throw(err))
+      })
+    }
+
+    try {
+      return handle(generator.next())
+    } catch (e) {
+      return Promise.reject(e)
+    }
+  }
+}
+
+function call(fn, ...args) {
+  return fn.apply(null, args)
+}
+
+function delay(time = 500, result = null) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(result)
+    }, time)
+  })
+}
+
+function* generateSequence() {
+  const waitMore = yield call(delay, 2000, 1000)
+  console.log(waitMore) // 1000
+
+  const result = yield call(delay, waitMore, '42')
+  console.log(result) // '42'
+
+  return 3
+}
+
+const sequence = async(generateSequence)
+
+sequence().then(r => console.log(r))
+
+```
+
 ### testability
