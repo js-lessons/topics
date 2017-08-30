@@ -4,6 +4,10 @@
 
 ### Сайдэффекты
 
+> Now, to a functional programmer, effects are scary in a [xenomorph kind of way](https://www.google.com.au/search?q=xenomorph). Nothing messes with functional purity quite like the need for side effects. On the other hand, effects are marvelous because they move the app forward. Without them, an app stays stuck in one state forever, never achieving anything.
+
+> [Re-freame docs](https://github.com/Day8/re-frame)
+
 Если наше приложение при каждой перезагрузке страницы стартует с нулевого состояния и все действия пользователя меняют только стор, то в таком приложении нет никаких побочных эффектов и действия можно описать плоскими объектами. Сайдэффекты проявляются как только нам нужно синхронизироваться (достать либо сохранить данные) с сервером или с каким-либо хранилищем помимо стора. Всю логику взаимодействия с сервером можно реализовать внутри компонент, но это нарушает DRY принцип и усложняет тестирование. Поэтому ее обычно выносят в redux middleware.
 
 ### redux-thunk не нужен
