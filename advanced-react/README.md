@@ -186,3 +186,4 @@ expect(gen.next()).toEqual(put({ type: MY_CRAZY_ACTION }))
 ## Ресурсы
 
 * [Документация к Redux-Saga](https://redux-saga.js.org/)
+* [Генераторы и итераторы](https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Iterators_and_Generators)
