@@ -1,5 +1,123 @@
 # React.js в продакшне
 
+## context
+
+Контекст это способ передать данные из компонента родителя во все вложенные компоненты, не зависимо от уровня вложености.
+
+Проблема которую контекст решает: доступ к глобальным данным приложения (локализация, стилизация, глобальный state и т.д.)
+
+Проблемы которые контекст создаёт: 
+- Так или иначе контекст является глобальным, а всё что глобальное - плохо
+- Компонент завязаный на котекст становится менее переиспользуемыемым, потому что теперь мы его можем использовтаь только в определённом контексте.
+- Такой компонент тяжелее тестировать (Кроме свойств нам приходится думать и про контекст)
+- Цепочка обновлений при изменении контекста может быть прервана методом shouldComponentUpdate компонента, который не знает о контексте
+
+Поэтому не рекомендуется использвать контекст, если на это нету действительно весомой причины (например свой фреймворк).
+
+Пример из [официальной документации](https://facebook.github.io/react/docs/context.html)  
+```jsx harmony
+const PropTypes = require('prop-types');
+
+class Button extends React.Component {
+  render() {
+    return (
+      <button style={{background: this.context.color}}>
+        {this.props.children}
+      </button>
+    );
+  }
+}
+
+Button.contextTypes = {
+  color: PropTypes.string
+};
+
+class Message extends React.Component {
+  render() {
+    return (
+      <div>
+        {this.props.text} <Button>Delete</Button>
+      </div>
+    );
+  }
+}
+
+class MessageList extends React.Component {
+  getChildContext() {
+    return {color: "purple"};
+  }
+
+  render() {
+    const children = this.props.messages.map((message) =>
+      <Message text={message.text} />
+    );
+    return <div>{children}</div>;
+  }
+}
+
+MessageList.childContextTypes = {
+  color: PropTypes.string
+};
+```
+## HoC
+
+High order Components - компоненты высшего порядка или компоненты-обёртки. Позволяют нам вынести функционал из одного компонента обернув его в другой компонент.
+
+### HoC как инструмент композиции и решение проблем с дублированием кода
+[Пример](https://jsfiddle.net/2f0wgku5/) HoC, который слушает событие изменения размера окна и передает актуальную высоту окна в обёрнутый компонент.
+```jsx harmony
+function screenSizeHoC(WrappedComponent) {
+  return class ScreenSize extends React.Component {
+    constructor(props) {
+      super(props)
+      
+      this.state = {
+        screenWidth: document.body.clientWidth
+      }
+      this.handleScreenResize = this.handleScreenResize.bind(this)
+    }
+    
+    componentDidMount() {
+      window.addEventListener('resize', this.handleScreenResize)
+    }
+    
+    componentWillUnmount() {
+      window.removeEventListener('resize', this.handleScreenResize)      
+    }
+    
+    handleScreenResize() {
+      this.setState({screenWidth: document.body.clientWidth})
+    }    
+    
+    render() {
+      return <WrappedComponent {...this.props} screenWidth={this.state.screenWidth}/>
+    }
+  }
+}
+```
+### HoC и решение проблем с контекстом
+HoC можно использовать для того чтобы инкапсулировать работу с контекстом внутри специального компонента который будет знать о контексте и передавать его в обёрнутый компонент через props
+Таким образом компонент станет более переиспользуемым(мы сможем использовать его как с контекстом(с помощью HoC) так и передавать props напрямую(без HoC))
+
+```jsx harmony
+export default function(WrappedComponent) {
+  return class WithStyle extends Component {
+
+    static contextTypes = {
+      style: PropTypes.object
+    }
+
+    render() {
+      return <WrappedComponent {...this.props} style={this.context.style || {}}/>
+    }
+  }
+}
+```
+Также HoC нужно использовать чтобы избежать проблемы с shouldComponentUpdate. 
+В этом случае HoC должен быть подписан на изменения контекста через промежуточный объект observer. 
+Поробнее можно почитать в [статье](https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076) от создателя MobX.
+
+
 ## redux-saga
 
 ### Сайдэффекты
@@ -270,7 +388,10 @@ Redux DevTools Extension &mdash; незаменимая вещь в работе
 
 ## Ресурсы
 
+* [What about the context issue](https://stackoverflow.com/questions/36428355/react-with-redux-what-about-the-context-issue) Den Abramov (Redux creator) answer
+* [How to safely use react context](https://medium.com/@mweststrate/how-to-safely-use-react-context-b7e343eff076) Michel Weststrate (MobX creator) article
 * [Документация к Redux-Saga](https://redux-saga.js.org/)
 * [Генераторы и итераторы](https://developer.mozilla.org/ru/docs/Web/JavaScript/Guide/Iterators_and_Generators)
 * [Jest Getting Started](https://facebook.github.io/jest/docs/en/getting-started.html)
 * [Jest Snapshot Testing](https://facebook.github.io/jest/docs/en/snapshot-testing.html)
+* [React Casts](https://www.youtube.com/channel/UCZkjWyyLvzWeoVWEpRemrDQ) 
