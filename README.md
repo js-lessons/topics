@@ -54,16 +54,15 @@
 * Сайдэффекты, middleware и redux-thunk
 
 
-### True React.js stack, продвинутый React.js
+### [React.js в продакшне](advanced-react/README.md)
 
 * context
 * HOC и решение проблем с контекстом
 * HOC как инструмент композиции и решение проблем с дублированием кода
-* redux-thunk не нужен - используем redux-saga, effects, generators,
-  testability
+* redux-thunk не нужен &mdash; используем redux-saga, эффекты, генераторы, тестируемость
 * Reducers as BD, selectors as Materialized Views
-* Redux dev-tools, redux-logger
 * Тестирование с Jest, снепшот тестирование
+* Redux dev-tools, redux-logger
 * propTypes, eslint, prettier, prettier-eslint
 
 
